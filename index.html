@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Natália Rodrigues - Calculadora Mega Hair</title>
+    <!-- Tailwind CSS Online CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            100: '#fef08a',
+                            300: '#fde047',
+                            400: '#facc15',
+                            500: '#d4af37',
+                            600: '#b8860b',
+                            700: '#8a6f1c',
+                            900: '#2b2005',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0b0a0f;
+            color: #f8fafc;
+            margin: 0;
+            padding: 16px 12px 48px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .font-serif-title {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+        .card-box {
+            background-color: #14121d;
+            border: 1px solid #2d293d;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+        .btn-option {
+            background-color: #1a1726;
+            border: 2px solid #332d47;
+            color: #e2e8f0;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: left;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: block;
+            touch-action: manipulation;
+        }
+        .btn-option.active {
+            background: linear-gradient(135deg, #2b2005 0%, #1c1402 100%);
+            border-color: #facc15 !important;
+            color: #fde047 !important;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0b0a0f; }
+        ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 4px; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Header Natália Rodrigues -->
+    <header class="w-full max-w-md bg-gradient-to-b from-[#1c1827] to-[#110f1a] border-2 border-gold-500/80 rounded-2xl p-5 text-center mb-4 shadow-xl shadow-gold-500/10 relative overflow-hidden">
+        <div class="absolute -right-10 -top-10 w-28 h-28 bg-gold-500/10 rounded-full blur-2xl pointer-events-none"></div>
+        
+        <!-- Logo Emblem SVG Natália Rodrigues -->
+        <div class="w-20 h-20 mx-auto mb-3 rounded-full bg-gradient-to-tr from-gold-700 via-gold-400 to-amber-200 p-0.5 shadow-lg shadow-gold-500/30 flex items-center justify-center">
+            <div class="w-full h-full rounded-full bg-[#0d0c12] flex items-center justify-center p-2">
+                <svg viewBox="0 0 100 100" class="w-12 h-12 text-gold-400 fill-current">
+                    <path d="M50 5 C25 5 5 25 5 50 C5 75 25 95 50 95 C75 95 95 75 95 50 C95 25 75 5 50 5 Z M50 12 C71 12 88 29 88 50 C88 71 71 88 50 88 C29 88 12 71 12 50 C12 29 29 12 50 12 Z" opacity="0.3"/>
+                    <path d="M 45 22 C 60 18, 78 28, 76 48 C 74 65, 58 75, 42 74 C 55 64, 56 46, 45 22 Z"/>
+                    <path d="M 68 34 C 74 40, 75 48, 70 54 C 65 48, 64 40, 68 34 Z"/>
+                </svg>
+            </div>
+        </div>
+
+        <h1 class="font-serif-title text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-gold-400 to-amber-100 tracking-wider uppercase">
+            Natália Rodrigues
+        </h1>
+        <p class="text-xs font-bold text-gold-400 tracking-[0.25em] uppercase mt-1">
+            Mega Hair • Calculadora
+        </p>
+    </header>
+
+    <main class="w-full max-w-md space-y-4">
+
+        <!-- Passo 1: Tipo do Cabelo -->
+        <section class="card-box">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="w-6 h-6 rounded-full bg-gold-500 text-black font-extrabold text-xs flex items-center justify-center">1</span>
+                <h2 class="text-xs font-bold text-gold-400 uppercase tracking-wider">Selecione o Tipo do Cabelo</h2>
+            </div>
+            <div id="hairTypesBox" class="grid grid-cols-2 gap-2">
+                <!-- JS populates buttons dynamically -->
+            </div>
+        </section>
+
+        <!-- Passo 2: Comprimento e Tamanhos -->
+        <section class="card-box">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="w-6 h-6 rounded-full bg-gold-500 text-black font-extrabold text-xs flex items-center justify-center">2</span>
+                <h2 class="text-xs font-bold text-gold-400 uppercase tracking-wider">Selecione o Comprimento</h2>
+            </div>
+            <div id="hairSizesBox" class="grid grid-cols-2 gap-2">
+                <!-- JS populates sizes dynamically -->
+            </div>
+        </section>
+
+        <!-- Passo 3: Gramatura e Atalhos -->
+        <section class="card-box">
+            <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-gold-500 text-black font-extrabold text-xs flex items-center justify-center">3</span>
+                    <h2 class="text-xs font-bold text-gold-400 uppercase tracking-wider">Quantidade de Gramas</h2>
+                </div>
+                <span class="text-[10px] text-emerald-400 font-semibold bg-emerald-950/60 border border-emerald-800/50 px-2 py-0.5 rounded-full">
+                    +50g fixas inclusas
+                </span>
+            </div>
+
+            <!-- Campo de entrada livre de gramas -->
+            <div class="relative mb-3">
+                <input type="number" 
+                       id="inputGrams" 
+                       inputmode="decimal" 
+                       step="any" 
+                       value="100" 
+                       oninput="window.calculate()"
+                       class="w-full bg-[#1c1928] border-2 border-gold-500/80 rounded-xl py-3 px-4 text-center text-3xl font-extrabold text-white outline-none focus:ring-2 focus:ring-gold-400">
+                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gold-400 font-extrabold text-lg pointer-events-none">g</span>
+            </div>
+
+            <!-- Botões atalhos rápidos de gramatura -->
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
+                <button type="button" onclick="window.setGramValue(50)" class="py-2 bg-[#1c1928] border border-slate-700 hover:border-gold-500 rounded-lg text-gold-300 font-bold text-xs active:bg-gold-500 active:text-black transition-all">50g</button>
+                <button type="button" onclick="window.setGramValue(100)" class="py-2 bg-[#1c1928] border border-slate-700 hover:border-gold-500 rounded-lg text-gold-300 font-bold text-xs active:bg-gold-500 active:text-black transition-all">100g</button>
+                <button type="button" onclick="window.setGramValue(150)" class="py-2 bg-[#1c1928] border border-slate-700 hover:border-gold-500 rounded-lg text-gold-300 font-bold text-xs active:bg-gold-500 active:text-black transition-all">150g</button>
+                <button type="button" onclick="window.setGramValue(200)" class="py-2 bg-[#1c1928] border border-slate-700 hover:border-gold-500 rounded-lg text-gold-300 font-bold text-xs active:bg-gold-500 active:text-black transition-all">200g</button>
+                <button type="button" onclick="window.setGramValue(250)" class="py-2 bg-[#1c1928] border border-slate-700 hover:border-gold-500 rounded-lg text-gold-300 font-bold text-xs active:bg-gold-500 active:text-black transition-all">250g</button>
+                <button type="button" onclick="window.setGramValue(300)" class="py-2 bg-[#1c1928] border border-slate-700 hover:border-gold-500 rounded-lg text-gold-300 font-bold text-xs active:bg-gold-500 active:text-black transition-all">300g</button>
+            </div>
+        </section>
+
+        <!-- Passo 4: Forma de Pagamento -->
+        <section class="card-box">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="w-6 h-6 rounded-full bg-gold-500 text-black font-extrabold text-xs flex items-center justify-center">4</span>
+                <h2 class="text-xs font-bold text-gold-400 uppercase tracking-wider">Forma de Pagamento</h2>
+            </div>
+
+            <div class="space-y-2">
+                <button type="button" id="btnPayVista" onclick="window.setPayment('a_vista')" class="btn-option active">
+                    <span class="block text-xs font-bold">À Vista</span>
+                    <span class="block text-[11px] text-emerald-400 font-medium">Sem acréscimo</span>
+                </button>
+
+                <button type="button" id="btnPay2_10" onclick="window.setPayment('2x_10x')" class="btn-option">
+                    <span class="block text-xs font-bold">2x a 10x no Cartão</span>
+                    <span class="block text-[11px] text-amber-300 font-medium">+10% de taxa sobre o valor final</span>
+                </button>
+
+                <button type="button" id="btnPay11_18" onclick="window.setPayment('11x_18x')" class="btn-option">
+                    <span class="block text-xs font-bold">11x a 18x no Cartão</span>
+                    <span class="block text-[11px] text-amber-300 font-medium">+20% de taxa sobre o valor final</span>
+                </button>
+            </div>
+
+            <!-- Grade de seletor de parcelas -->
+            <div id="installmentsArea" class="mt-4 pt-3 border-t border-slate-800 hidden">
+                <span class="block text-[11px] font-semibold text-slate-400 mb-2">Selecione o número de parcelas:</span>
+                <div id="installmentsGrid" class="grid grid-cols-5 gap-1.5">
+                    <!-- JS populates installment buttons -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Resumo do Orçamento -->
+        <section class="card-box !border-2 !border-gold-500/80 relative">
+            <h3 class="text-sm font-extrabold text-gold-400 uppercase tracking-wider pb-2 mb-3 border-b border-gold-500/30 flex items-center justify-between">
+                <span>Resumo do Orçamento</span>
+                <span class="text-[10px] text-slate-400 font-normal lowercase">valores calculados</span>
+            </h3>
+
+            <div class="space-y-2 text-xs text-slate-300">
+                <div class="flex justify-between">
+                    <span class="text-slate-400">Preço Tabela (por Kg):</span>
+                    <span class="font-bold text-white" id="outPriceKg">R$ 0,00</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Cabelo (<span id="outGramsUser">100</span>g + 50g = <span id="outGramsTotal" class="font-bold">150g</span>):</span>
+                    <span class="font-bold text-gold-300" id="outHairCost">R$ 0,00</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Taxa Gramatura (<span id="outGramsFeeLabel">150</span>g × R$10):</span>
+                    <span class="font-bold text-gold-300" id="outGramFee">+ R$ 0,00</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Adição Fixa:</span>
+                    <span class="font-bold text-white">+ R$ 630,00</span>
+                </div>
+
+                <div class="flex justify-between pt-2 border-t border-slate-800 text-sm font-bold">
+                    <span class="text-white">Subtotal À Vista:</span>
+                    <span class="text-emerald-400" id="outSubtotal">R$ 0,00</span>
+                </div>
+
+                <div class="flex justify-between text-amber-300 font-semibold hidden" id="outTaxRow">
+                    <span>Taxa Cartão (<span id="outTaxPercent">0%</span>):</span>
+                    <span id="outTaxAmount">+ R$ 0,00</span>
+                </div>
+            </div>
+
+            <!-- Card Total Final -->
+            <div class="mt-4 p-4 rounded-xl bg-gradient-to-r from-amber-950/80 via-gold-900/50 to-amber-950/80 border border-gold-500 text-center shadow-inner">
+                <div class="text-[10px] uppercase font-extrabold tracking-widest text-gold-300">Valor Final do Orçamento</div>
+                <div class="text-3xl font-black text-amber-300 my-1 drop-shadow-md" id="outFinalTotal">R$ 0,00</div>
+                <div class="text-xs font-bold text-emerald-400" id="outInstallmentText">Pagamento À Vista</div>
+            </div>
+
+            <!-- Botão WhatsApp -->
+            <button type="button" 
+                    onclick="window.copyWhatsApp()" 
+                    class="mt-4 w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-gold-500 via-amber-400 to-gold-600 text-black font-extrabold text-xs uppercase tracking-wider shadow-lg shadow-gold-500/20 hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                </svg>
+                Copiar Orçamento p/ WhatsApp
+            </button>
+        </section>
+
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 border border-gold-500 text-gold-300 font-bold text-xs py-2.5 px-5 rounded-full shadow-2xl hidden z-50">
+        Orçamento copiado para o WhatsApp!
+    </div>
+
+    <script>
+        // Tabela completa de preços da imagem (por Kg)
+        window.HAIR_DATA = {
+            "Brasileiro regional": [
+                { size: "40/45cm", price: 4100 },
+                { size: "50/55cm", price: 5600 },
+                { size: "59/62cm", price: 8300 },
+                { size: "65/70cm", price: 9300 },
+                { size: "75/80cm", price: 9500 }
+            ],
+            "Brasileiro fino": [
+                { size: "20/30cm", price: 2900 },
+                { size: "40/45cm", price: 4800 },
+                { size: "50/55cm", price: 7700 },
+                { size: "59/62cm", price: 9300 }
+            ],
+            "Brasileiro premium": [
+                { size: "50/55cm", price: 8300 },
+                { size: "60/65cm", price: 13200 },
+                { size: "68/70cm", price: 13800 }
+            ],
+            "Brasileiro permanente": [
+                { size: "15/20cm", price: 3900 },
+                { size: "40/45cm", price: 4400 },
+                { size: "50/55cm", price: 6100 },
+                { size: "60/65cm", price: 8900 }
+            ],
+            "Brasileiro loiro premium": [
+                { size: "40/45cm", price: 6800 },
+                { size: "50/55cm", price: 9600 },
+                { size: "60/65cm", price: 11000 },
+                { size: "68/70cm", price: 15000 },
+                { size: "75/83cm", price: 16500 }
+            ],
+            "Brasileiro finalizado": [
+                { size: "60/65cm", price: 10400 }
+            ]
+        };
+
+        window.selectedType = "Brasileiro regional";
+        window.selectedSizeIdx = 0;
+        window.selectedPayment = "a_vista";
+        window.selectedInstallments = 2;
+
+        window.formatMoney = function(val) {
+            return val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        };
+
+        window.renderTypes = function() {
+            const container = document.getElementById('hairTypesBox');
+            if (!container) return;
+
+            let html = '';
+            Object.keys(window.HAIR_DATA).forEach(type => {
+                const isActive = type === window.selectedType;
+                const activeClasses = isActive 
+                    ? "btn-option active" 
+                    : "btn-option";
+
+                html += `
+                    <button type="button" 
+                            onclick="window.selectHairType('${type}')" 
+                            class="${activeClasses}">
+                        <span class="block text-xs font-bold leading-tight">${type}</span>
+                    </button>
+                `;
+            });
+            container.innerHTML = html;
+        };
+
+        window.renderSizes = function() {
+            const container = document.getElementById('hairSizesBox');
+            if (!container) return;
+
+            const list = window.HAIR_DATA[window.selectedType] || [];
+            let html = '';
+
+            list.forEach((item, idx) => {
+                const isActive = idx === window.selectedSizeIdx;
+                const activeClasses = isActive 
+                    ? "btn-option active" 
+                    : "btn-option";
+
+                html += `
+                    <button type="button" 
+                            onclick="window.selectHairSize(${idx})" 
+                            class="${activeClasses}">
+                        <span class="block text-xs font-bold">${item.size}</span>
+                        <span class="block text-[10px] text-gold-400 font-semibold">${window.formatMoney(item.price)}/kg</span>
+                    </button>
+                `;
+            });
+            container.innerHTML = html;
+        };
+
+        window.selectHairType = function(type) {
+            window.selectedType = type;
+            window.selectedSizeIdx = 0;
+            window.renderTypes();
+            window.renderSizes();
+            window.calculate();
+        };
+
+        window.selectHairSize = function(idx) {
+            window.selectedSizeIdx = idx;
+            window.renderSizes();
+            window.calculate();
+        };
+
+        window.setGramValue = function(val) {
+            const input = document.getElementById('inputGrams');
+            if (input) input.value = val;
+            window.calculate();
+        };
+
+        window.setPayment = function(payType) {
+            window.selectedPayment = payType;
+            if (payType === '2x_10x') window.selectedInstallments = 2;
+            if (payType === '11x_18x') window.selectedInstallments = 11;
+            window.updatePaymentUI();
+            window.calculate();
+        };
+
+        window.selectInstallmentNum = function(num) {
+            window.selectedInstallments = num;
+            window.updatePaymentUI();
+            window.calculate();
+        };
+
+        window.updatePaymentUI = function() {
+            const btnV = document.getElementById('btnPayVista');
+            const btn2 = document.getElementById('btnPay2_10');
+            const btn11 = document.getElementById('btnPay11_18');
+
+            if (btnV) btnV.className = window.selectedPayment === 'a_vista' ? 'btn-option active' : 'btn-option';
+            if (btn2) btn2.className = window.selectedPayment === '2x_10x' ? 'btn-option active' : 'btn-option';
+            if (btn11) btn11.className = window.selectedPayment === '11x_18x' ? 'btn-option active' : 'btn-option';
+
+            const area = document.getElementById('installmentsArea');
+            const grid = document.getElementById('installmentsGrid');
+
+            if (window.selectedPayment === 'a_vista') {
+                if (area) area.classList.add('hidden');
+            } else {
+                if (area) area.classList.remove('hidden');
+                let start = window.selectedPayment === '2x_10x' ? 2 : 11;
+                let end = window.selectedPayment === '2x_10x' ? 10 : 18;
+
+                let html = '';
+                for (let i = start; i <= end; i++) {
+                    const isActive = i === window.selectedInstallments;
+                    const btnClass = isActive 
+                        ? "bg-gold-500 text-black font-extrabold border-gold-400" 
+                        : "bg-[#1c1928] text-white border-slate-700 hover:border-gold-500";
+
+                    html += `
+                        <button type="button" 
+                                onclick="window.selectInstallmentNum(${i})" 
+                                class="py-2 border rounded-lg text-xs font-bold transition-all ${btnClass}">
+                            ${i}x
+                        </button>
+                    `;
+                }
+                if (grid) grid.innerHTML = html;
+            }
+        };
+
+        window.calculate = function() {
+            const inputEl = document.getElementById('inputGrams');
+            const inputVal = parseFloat(inputEl ? inputEl.value : 100);
+            const G = (isNaN(inputVal) || inputVal < 0) ? 0 : inputVal;
+            const totalGrams = G + 50; // Gramas digitadas + 50g fixas
+
+            const list = window.HAIR_DATA[window.selectedType] || window.HAIR_DATA["Brasileiro regional"];
+            const item = list[window.selectedSizeIdx] || list[0];
+
+            const priceKg = item.price;
+            const priceGram = priceKg / 1000;
+
+            // 1. Custo do Cabelo = (Gramas digitadas + 50g fixas) * Preço por Grama
+            const hairCost = totalGrams * priceGram;
+
+            // 2. Taxa de Gramatura = Peso Total (Gramas + 50g) * 10 (R$ 1.000 a cada 100g de cabelo total)
+            const gramFee = totalGrams * 10;
+
+            // 3. Adição Fixa = R$ 630,00
+            const fixedFee = 630;
+
+            // Subtotal À Vista
+            const subtotal = hairCost + gramFee + fixedFee;
+
+            // Taxa Cartão
+            let taxRate = 0;
+            if (window.selectedPayment === '2x_10x') taxRate = 0.10;
+            if (window.selectedPayment === '11x_18x') taxRate = 0.20;
+
+            const taxAmount = subtotal * taxRate;
+            const finalTotal = subtotal + taxAmount;
+
+            // Atualização dos elementos na tela
+            document.getElementById('outPriceKg').textContent = `${window.formatMoney(priceKg)} (${window.formatMoney(priceGram)}/g)`;
+            document.getElementById('outGramsUser').textContent = G;
+            document.getElementById('outGramsFeeLabel').textContent = totalGrams;
+            document.getElementById('outGramsTotal').textContent = `${totalGrams}g`;
+            document.getElementById('outHairCost').textContent = window.formatMoney(hairCost);
+            document.getElementById('outGramFee').textContent = `+ ${window.formatMoney(gramFee)}`;
+            document.getElementById('outSubtotal').textContent = window.formatMoney(subtotal);
+
+            const rowTax = document.getElementById('outTaxRow');
+            if (taxRate > 0) {
+                if (rowTax) rowTax.classList.remove('hidden');
+                document.getElementById('outTaxPercent').textContent = `${taxRate * 100}%`;
+                document.getElementById('outTaxAmount').textContent = `+ ${window.formatMoney(taxAmount)}`;
+            } else {
+                if (rowTax) rowTax.classList.add('hidden');
+            }
+
+            document.getElementById('outFinalTotal').textContent = window.formatMoney(finalTotal);
+
+            const txtInst = document.getElementById('outInstallmentText');
+            if (window.selectedPayment === 'a_vista') {
+                txtInst.textContent = "Pagamento À Vista";
+                txtInst.className = "text-xs font-bold text-emerald-400";
+            } else {
+                const parcelVal = finalTotal / window.selectedInstallments;
+                txtInst.textContent = `Em ${window.selectedInstallments}x de ${window.formatMoney(parcelVal)} no cartão`;
+                txtInst.className = "text-xs font-bold text-amber-300";
+            }
+        };
+
+        window.copyWhatsApp = function() {
+            const inputVal = parseFloat(document.getElementById('inputGrams').value);
+            const G = (isNaN(inputVal) || inputVal < 0) ? 0 : inputVal;
+            const totalGrams = G + 50;
+            const list = window.HAIR_DATA[window.selectedType];
+            const item = list[window.selectedSizeIdx] || list[0];
+
+            const priceKg = item.price;
+            const priceGram = priceKg / 1000;
+            const hairCost = totalGrams * priceGram;
+            const gramFee = totalGrams * 10;
+            const subtotal = hairCost + gramFee + 630;
+
+            let taxRate = 0;
+            if (window.selectedPayment === '2x_10x') taxRate = 0.10;
+            if (window.selectedPayment === '11x_18x') taxRate = 0.20;
+
+            const finalTotal = subtotal + (subtotal * taxRate);
+
+            let payDesc = "*À Vista*";
+            if (window.selectedPayment !== 'a_vista') {
+                const parcelVal = finalTotal / window.selectedInstallments;
+                payDesc = `*${window.selectedInstallments}x de ${window.formatMoney(parcelVal)}* no cartão`;
+            }
+
+            const msg = 
+`✨ *ORÇAMENTO NATÁLIA RODRIGUES MEGA HAIR* ✨
+----------------------------------------
+💇‍♀️ *Cabelo:* ${window.selectedType.toUpperCase()}
+📏 *Comprimento:* ${item.size}
+⚖️ *Quantidade:* ${G}g (+50g fixas = ${totalGrams}g)
+
+📊 *Detalhamento do Orçamento:*
+• Tabela por Kg: ${window.formatMoney(priceKg)}
+• Custo Cabelo (${totalGrams}g): ${window.formatMoney(hairCost)}
+• Taxa Gramatura (${totalGrams}g × R$10): ${window.formatMoney(gramFee)}
+• Adição Fixa: R$ 630,00
+• Subtotal À Vista: ${window.formatMoney(subtotal)}
+
+💳 *Forma de Pagamento:* ${payDesc}
+💰 *VALOR FINAL:* ${window.formatMoney(finalTotal)}
+----------------------------------------
+_Natália Rodrigues Mega Hair_`;
+
+            // Failsafe copy mechanism for all browsers including iOS
+            const textarea = document.createElement("textarea");
+            textarea.value = msg;
+            textarea.style.position = "fixed";
+            textarea.style.left = "-9999px";
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+
+            try {
+                document.execCommand('copy');
+                window.showToast("Orçamento copiado para o WhatsApp!");
+            } catch (err) {
+                window.showToast("Erro ao copiar.");
+            }
+            document.body.removeChild(textarea);
+        };
+
+        window.showToast = function(msg) {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 2500);
+        };
+
+        // Triple failsafe initialization
+        window.initApp = function() {
+            window.renderTypes();
+            window.renderSizes();
+            window.updatePaymentUI();
+            window.calculate();
+        };
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', window.initApp);
+        } else {
+            window.initApp();
+        }
+        window.onload = window.initApp;
+    </script>
+</body>
+</html>
