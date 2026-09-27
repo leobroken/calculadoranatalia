@@ -81,6 +81,14 @@
         ::-webkit-scrollbar-track { background: #0b0a0f; }
         ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 4px; }
     </style>
+
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0b0a0f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mega Hair">
+    <link rel="apple-touch-icon" href="icon.png">
 </head>
 <body class="min-h-screen">
 
@@ -576,6 +584,17 @@ _Natália Rodrigues Mega Hair_`;
             window.initApp();
         }
         window.onload = window.initApp;
+    </script>
+
+    <script>
+        // Registra o Service Worker para PWA e funcionamento Offline
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('PWA instalado com sucesso', reg))
+                    .catch(err => console.log('Erro ao instalar PWA', err));
+            });
+        }
     </script>
 </body>
 </html>
