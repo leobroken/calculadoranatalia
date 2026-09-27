@@ -1,0 +1,17 @@
+{
+  "name": "Calculadora Mega Hair - Natália Rodrigues",
+  "short_name": "Mega Hair",
+  "description": "Calculadora de orçamentos",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b0a0f",
+  "theme_color": "#0b0a0f",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
