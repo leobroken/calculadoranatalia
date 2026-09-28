@@ -1,4 +1,4 @@
-const CACHE_NAME = 'megahair-calc-v2';
+const CACHE_NAME = 'megahair-calc-v3';
 const urlsToCache = [
   './',
   './index.html',
@@ -6,13 +6,31 @@ const urlsToCache = [
   './icon.png'
 ];
 
+// Instala o novo cache e força a atualização
 self.addEventListener('install', event => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => cache.addAll(urlsToCache))
   );
 });
 
+// Apaga os caches antigos automaticamente
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    }).then(() => self.clients.claim())
+  );
+});
+
+// Busca os arquivos
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
