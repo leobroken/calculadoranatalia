@@ -146,9 +146,6 @@
                     <span class="w-6 h-6 rounded-full bg-gold-500 text-black font-extrabold text-xs flex items-center justify-center">3</span>
                     <h2 class="text-xs font-bold text-gold-400 uppercase tracking-wider">Quantidade de Gramas</h2>
                 </div>
-                <span class="text-[10px] text-emerald-400 font-semibold bg-emerald-950/60 border border-emerald-800/50 px-2 py-0.5 rounded-full">
-                    +50g fixas inclusas
-                </span>
             </div>
 
             <!-- Campo de entrada livre de gramas -->
@@ -220,11 +217,11 @@
                     <span class="font-bold text-white" id="outPriceKg">R$ 0,00</span>
                 </div>
                 <div class="flex justify-between">
-                    <span>Cabelo (<span id="outGramsUser">100</span>g + 50g = <span id="outGramsTotal" class="font-bold">150g</span>):</span>
+                    <span>Cabelo (<span id="outGramsTotal" class="font-bold">100g</span>):</span>
                     <span class="font-bold text-gold-300" id="outHairCost">R$ 0,00</span>
                 </div>
                 <div class="flex justify-between">
-                    <span>Taxa Gramatura (<span id="outGramsFeeLabel">150</span>g × R$10):</span>
+                    <span>Taxa Gramatura (<span id="outGramsFeeLabel">100</span>g × R$10):</span>
                     <span class="font-bold text-gold-300" id="outGramFee">+ R$ 0,00</span>
                 </div>
                 <div class="flex justify-between">
@@ -439,7 +436,6 @@
             const inputEl = document.getElementById('inputGrams');
             const inputVal = parseFloat(inputEl ? inputEl.value : 100);
             const G = (isNaN(inputVal) || inputVal < 0) ? 0 : inputVal;
-            const totalGrams = G + 50; // Gramas digitadas + 50g fixas
 
             const list = window.HAIR_DATA[window.selectedType] || window.HAIR_DATA["Brasileiro regional"];
             const item = list[window.selectedSizeIdx] || list[0];
@@ -447,11 +443,11 @@
             const priceKg = item.price;
             const priceGram = priceKg / 1000;
 
-            // 1. Custo do Cabelo = (Gramas digitadas + 50g fixas) * Preço por Grama
-            const hairCost = totalGrams * priceGram;
+            // 1. Custo do Cabelo = Gramas digitadas * Preço por Grama
+            const hairCost = G * priceGram;
 
-            // 2. Taxa de Gramatura = Peso Total (Gramas + 50g) * 10 (R$ 1.000 a cada 100g de cabelo total)
-            const gramFee = totalGrams * 10;
+            // 2. Taxa de Gramatura = Gramas * 10 (R$ 1.000 a cada 100g)
+            const gramFee = G * 10;
 
             // 3. Adição Fixa = R$ 630,00
             const fixedFee = 630;
@@ -469,9 +465,8 @@
 
             // Atualização dos elementos na tela
             document.getElementById('outPriceKg').textContent = `${window.formatMoney(priceKg)} (${window.formatMoney(priceGram)}/g)`;
-            document.getElementById('outGramsUser').textContent = G;
-            document.getElementById('outGramsFeeLabel').textContent = totalGrams;
-            document.getElementById('outGramsTotal').textContent = `${totalGrams}g`;
+            document.getElementById('outGramsFeeLabel').textContent = G;
+            document.getElementById('outGramsTotal').textContent = `${G}g`;
             document.getElementById('outHairCost').textContent = window.formatMoney(hairCost);
             document.getElementById('outGramFee').textContent = `+ ${window.formatMoney(gramFee)}`;
             document.getElementById('outSubtotal').textContent = window.formatMoney(subtotal);
@@ -501,14 +496,14 @@
         window.copyWhatsApp = function() {
             const inputVal = parseFloat(document.getElementById('inputGrams').value);
             const G = (isNaN(inputVal) || inputVal < 0) ? 0 : inputVal;
-            const totalGrams = G + 50;
             const list = window.HAIR_DATA[window.selectedType];
             const item = list[window.selectedSizeIdx] || list[0];
 
             const priceKg = item.price;
             const priceGram = priceKg / 1000;
-            const hairCost = totalGrams * priceGram;
-            const gramFee = totalGrams * 10;
+            
+            const hairCost = G * priceGram;
+            const gramFee = G * 10;
             const subtotal = hairCost + gramFee + 630;
 
             let taxRate = 0;
